@@ -32,3 +32,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
+
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="glass-card mt-5">
+            <h3 class="text-center mb-4">User Login</h3>
+            <?php if($error): ?>
+                <div class="alert alert-danger"><?php echo $error; ?></div>
+            <?php endif; ?>
+            <form method="POST" id="userLoginForm">
+                <div class="mb-3">
+                    <label class="form-label">Email address</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary-custom w-100">Login</button>
+            </form>
+            <div class="mt-3 text-center">
+                <span>Don't have an account?</span> <a href="register.php">Register here</a>
+            </div>
+        </div>
+    </div>
+</div>
+<?php require_once 'includes/footer.php'; ?>
