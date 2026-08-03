@@ -25,3 +25,52 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="glass-card mt-5 mb-5">
+            <h3 class="text-center mb-4">New User Registration</h3>
+            <?php if($success): ?>
+                <div class="alert alert-success"><?php echo $success; ?></div>
+            <?php endif; ?>
+            <?php if($error): ?>
+                <div class="alert alert-danger"><?php echo $error; ?></div>
+            <?php endif; ?>
+            <form method="POST" id="registerForm">
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email address</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Mobile Number</label>
+                    <input type="text" name="mobile" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Role</label>
+                    <select name="role" class="form-select" required>
+                        <option value="Student">Student</option>
+                        <option value="Staff">Staff</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    <textarea name="address" class="form-control" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary-custom w-100">Register</button>
+            </form>
+            <div class="mt-3 text-center">
+                <span>Already have an account?</span> <a href="index.php">Login here</a>
+            </div>
+        </div>
+    </div>
+</div>
+<?php require_once 'includes/footer.php'; ?>
