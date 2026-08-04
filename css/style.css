@@ -1,0 +1,98 @@
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+}
+
+/* Navbar Enhancements */
+.navbar {
+    border-bottom: 1px solid #eaeaea;
+}
+.navbar-brand {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.nav-link {
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+/* Clean Professional Cards */
+.card-clean {
+    background: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e1e4e8;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    padding: 1.5rem;
+    transition: box-shadow 0.2s ease;
+}
+
+.card-clean:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* Custom Buttons */
+.btn-primary-custom {
+    background-color: #0056b3;
+    border: none;
+    color: white;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-primary-custom:hover, .btn-primary-custom:focus {
+    background-color: #004494;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.btn-primary-custom:active {
+    transform: translateY(0);
+}
+
+/* Table Enhancements */
+.table {
+    margin-bottom: 0;
+}
+.table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    color: #555;
+    border-bottom: 2px solid #e1e4e8;
+}
+.table td {
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Custom Nav Tabs for Admin */
+.nav-pills .nav-link {
+    border-radius: 6px;
+    color: #495057;
+    font-weight: 500;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: #0056b3;
+    color: white;
+}
+
+/* Utilities */
+.text-muted {
+    color: #6c757d !important;
+}
