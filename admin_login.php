@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
     $login = $admin->login($email, $password);
     if ($login) {
-        $_SESSION['admin_id'] = $login['id'];
+        $_SESSION['admin_id'] = $login['adminID'];
         $_SESSION['admin_name'] = $login['name'];
         header("Location: admin_dashboard.php");
         exit;

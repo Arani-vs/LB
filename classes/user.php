@@ -27,7 +27,7 @@ class User {
     public function setRole($role) { $this->role = $role; }
 
     public function isEmailExists($email) {
-        $sql = "SELECT id FROM " . $this->table_name . " WHERE email = ?";
+        $sql = "SELECT member_id FROM " . $this->table_name . " WHERE email = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -36,33 +36,15 @@ class User {
     }
 
     public function register() {
-       
         $status = 1;
+        $hashed_password = password_hash($this->password, PASSWORD_DEFAULT);
         $sql = "INSERT INTO " . $this->table_name . " (name, email, password, mobile, address, role, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
         if (!$stmt) {
             return false;
         }
-        $stmt->bind_param("ssssssi", $this->name, $this->email, $this->password, $this->mobile, $this->address, $this->role, $status);
+        $stmt->bind_param("ssssssi", $this->name, $this->email, $hashed_password, $this->mobile, $this->address, $this->role, $status);
         if($stmt->execute()){
-            $user_id = $this->conn->insert_id;
-            $child_table = "";
-            if ($this->role == 'Admin') {
-                $child_table = 'admins';
-            } elseif ($this->role == 'Student' || strtolower($this->role) == 'user') {
-                $child_table = 'students';
-            } elseif ($this->role == 'Staff') {
-                $child_table = 'staff';
-            }
-            
-            if ($child_table != "") {
-                $child_sql = "INSERT INTO " . $child_table . " (user_id) VALUES (?)";
-                $child_stmt = $this->conn->prepare($child_sql);
-                if ($child_stmt) {
-                    $child_stmt->bind_param("i", $user_id);
-                    $child_stmt->execute();
-                }
-            }
             return true;
         }
         return false;
@@ -84,28 +66,24 @@ class User {
         return false;
     }
     
-    public function getUserDetails($id) {
-        $sql = "SELECT * FROM " . $this->table_name . " WHERE id = ?";
+    public function getUserDetails($member_id) {
+        $sql = "SELECT * FROM " . $this->table_name . " WHERE member_id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $id);
+        $stmt->bind_param("i", $member_id);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_assoc();
     }
     
     public function getAllUsers() {
-        $sql = "SELECT u.*, a.admin_id, s.student_id, st.staff_id 
-                FROM " . $this->table_name . " u
-                LEFT JOIN admins a ON u.id = a.user_id
-                LEFT JOIN students s ON u.id = s.user_id
-                LEFT JOIN staff st ON u.id = st.user_id";
+        $sql = "SELECT * FROM " . $this->table_name;
         return $this->conn->query($sql);
     }
     
-    public function toggleUserStatus($id, $status) {
-        $sql = "UPDATE " . $this->table_name . " SET status = ? WHERE id = ?";
+    public function toggleUserStatus($member_id, $status) {
+        $sql = "UPDATE " . $this->table_name . " SET status = ? WHERE member_id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ii", $status, $id);
+        $stmt->bind_param("ii", $status, $member_id);
         return $stmt->execute();
     }
 }

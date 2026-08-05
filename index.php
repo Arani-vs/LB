@@ -15,10 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $login = $user->login($email, $password);
     if ($login) {
         $status = isset($login['status']) ? $login['status'] : 1;
-        $role = isset($login['role']) ? $login['role'] : 'Student';
+        $role = isset($login['role']) ? $login['role'] : 'Member';
         
         if ($status == 1) {
-            $_SESSION['user_id'] = $login['id'];
+            $_SESSION['user_id'] = $login['member_id'];
             $_SESSION['user_name'] = $login['name'];
             $_SESSION['user_role'] = $role;
             header("Location: user_dashboard.php");

@@ -42,7 +42,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $issue->setBookNo($book_no);
             $issue->setBookName($b_data['book_name']);
             $issue->setBookAuthor($b_data['author_name']);
-            $issue->setStudentId($student_id);
+            $issue->setMemberId($student_id);
             $issue->setExpectedReturnDate($expected);
             
             $issue->issueBook();
@@ -80,7 +80,7 @@ $categories = $book->getAllCategories();
                     <button class="nav-link active" id="books-tab" data-bs-toggle="tab" data-bs-target="#books" type="button" role="tab">Manage Books</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="students-tab" data-bs-toggle="tab" data-bs-target="#students" type="button" role="tab">Manage Users</button>
+                    <button class="nav-link" id="students-tab" data-bs-toggle="tab" data-bs-target="#members" type="button" role="tab">Manage Members</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="issued-tab" data-bs-toggle="tab" data-bs-target="#issued" type="button" role="tab">View Issued Books</button>
@@ -168,8 +168,8 @@ $categories = $book->getAllCategories();
                                                         <div class="modal-body">
                                                             <input type="hidden" name="book_no" value="<?php echo $b['book_no']; ?>">
                                                             <div class="mb-3">
-                                                                <label class="form-label text-muted small text-uppercase fw-bold">Student ID</label>
-                                                                <input type="number" name="student_id" class="form-control" required placeholder="Enter student's ID number">
+                                                                <label class="form-label text-muted small text-uppercase fw-bold">Member ID</label>
+                                                                <input type="number" name="student_id" class="form-control" required placeholder="Enter member's ID number">
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer border-0 pt-0">
@@ -192,7 +192,7 @@ $categories = $book->getAllCategories();
     </div>
 
     <!-- Manage Users -->
-    <div class="tab-pane fade" id="students" role="tabpanel">
+    <div class="tab-pane fade" id="members" role="tabpanel">
         <div class="card-clean">
             <h5 class="mb-4">Registered Users</h5>
             <div class="table-responsive">
@@ -204,10 +204,10 @@ $categories = $book->getAllCategories();
                     while($u = $allUsers->fetch_assoc()): 
                     ?>
                     <tr>
-                        <td><?php echo $u['id']; ?></td>
+                        <td><?php echo $u['member_id']; ?></td>
                         <td><?php echo $u['name']; ?></td>
                         <td><?php echo $u['email']; ?></td>
-                        <td><?php echo isset($u['role']) ? $u['role'] : 'Student'; ?></td>
+                        <td><?php echo isset($u['role']) ? $u['role'] : 'Member'; ?></td>
                         <td>
                             <?php if(!isset($u['status']) || $u['status'] == 1): ?>
                                 <span class="badge bg-success">Active</span>
@@ -218,7 +218,7 @@ $categories = $book->getAllCategories();
                         <td>
                             <form method="POST" style="display:inline;">
                                 <input type="hidden" name="toggle_user_status" value="1">
-                                <input type="hidden" name="user_id" value="<?php echo $u['id']; ?>">
+                                <input type="hidden" name="user_id" value="<?php echo $u['member_id']; ?>">
                                 <?php if(!isset($u['status']) || $u['status'] == 1): ?>
                                     <input type="hidden" name="new_status" value="0">
                                     <button type="submit" class="btn btn-sm btn-danger">Deactivate</button>
@@ -242,7 +242,7 @@ $categories = $book->getAllCategories();
             <h5 class="mb-4">Issued Books</h5>
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
-                <thead><tr><th>Book No</th><th>Book Name</th><th>Student Name</th><th>Issue Date</th><th>Status</th><th>Action</th></tr></thead>
+                <thead><tr><th>Book No</th><th>Book Name</th><th>Member Name</th><th>Issue Date</th><th>Status</th><th>Action</th></tr></thead>
                 <tbody>
                     <?php while($i = $allIssued->fetch_assoc()): ?>
                     <tr>
@@ -280,7 +280,7 @@ $categories = $book->getAllCategories();
             <h5 class="mb-4 text-danger"><i class="bi bi-exclamation-triangle me-2"></i>Defaulter List (Overdue Books)</h5>
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
-                <thead><tr><th>Book Name</th><th>Student</th><th>Email</th><th>Mobile</th><th>Issue Date</th></tr></thead>
+                <thead><tr><th>Book Name</th><th>Member</th><th>Email</th><th>Mobile</th><th>Issue Date</th></tr></thead>
                 <tbody>
                     <?php if($defaulters->num_rows > 0): ?>
                         <?php while($d = $defaulters->fetch_assoc()): ?>
@@ -309,7 +309,7 @@ $categories = $book->getAllCategories();
                 <table class="table table-striped align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th>Student Name</th>
+                            <th>Member Name</th>
                             <th>Book Name</th>
                             <th>Fine Amount</th>
                             <th>Status</th>

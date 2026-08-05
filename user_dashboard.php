@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['borrow_book'])) {
     $issue->setBookNo($_POST['book_no']);
     $issue->setBookName($_POST['book_name']);
     $issue->setBookAuthor($_POST['book_author']);
-    $issue->setStudentId($_SESSION['user_id']);
+    $issue->setMemberId($_SESSION['user_id']);
     $issue->setExpectedReturnDate($_POST['return_date']);
     
     if ($issue->issueBook()) {
